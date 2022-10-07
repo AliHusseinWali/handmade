@@ -1,0 +1,27 @@
+{% extends 'handMade/home.html'%}
+
+{% load static %}
+
+<title>Sign in</title>
+
+{% block body %}
+
+<form method = "POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">UserName :</label>
+        <input type="text" name="username" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword" class="form-label">Password :</label>
+        <input name="password" type="password" class="form-control" id="exampleInputPassword">
+    </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% for msg in messages %}
+    <h4>{{msg}}</h4>
+    {% endfor %}
+
+{% endblock %}
+
+
