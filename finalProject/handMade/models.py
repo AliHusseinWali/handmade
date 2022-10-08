@@ -1,10 +1,9 @@
-from contextlib import nullcontext
-from email.policy import default
-from pydoc import describe
-from unicodedata import category
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
+
+
 # Create your models here.
 
 
@@ -12,7 +11,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
-    phoneNumber = models.IntegerField(max_length=50, null=True)
+    phone = models.CharField(max_length=15)
     photo = models.ImageField(default="")
 
     def __str__(self):
