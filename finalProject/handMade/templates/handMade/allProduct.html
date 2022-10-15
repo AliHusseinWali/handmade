@@ -3,26 +3,28 @@
 {% extends 'handMade/home.html' %}
 
 {% block body %}
-<div>
-  {% for card in product %}
 
-  <a href="{%url 'Productdetails' id=card.id %}" class="btn btn-primary">
+  {% for card in product %}
+<div>
+  <a href="{%url 'Product_details' id=card.id %}" class="btn btn-primary">
     <div class="card" style="width: 18rem;">
-      <img src="{{card.imageLink}}" class="card-img-top" alt="...">
+      <img src={{card.imageLink}} class="card-img-top" alt="...">
       <div class="card-body">
-        <p class="card-text">{{card.title}}</p>
-        <p class="card-text">{{card.description}}</p>
-        <a href="{%url 'Productdetails' id=card.id %}" class="btn btn-primary">Details</a>
+        <h5 class="card-title">{{card.title}}</h5>
       </div>
     </div>
   </a>
+</div>
   
-  {% if request.user in card.favorite.all %}
-  <a href="{% url 'add_to_favorite' pk=card.id %}"><i class="fas fa-heart myfav">Remove</i></a>
+{% if request.user in card.favorite.all %}
+  <a href="{% url 'add_remove_favorite' id=card.id %}">remove</a>
   {% else %}
-  <a href="{% url 'add_to_favorite' pk=card.id %}"><i class="fa-solid fa-heart"></i></a>
-  {% endif %}
+  <a href="{% url 'add_remove_favorite' id=card.id %}">add</a>
+{% endif %}
 
 {% endfor %}
-</div>
+
 {% endblock %}
+
+
+

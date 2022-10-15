@@ -32,6 +32,7 @@ class Product (models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
     price = models.FloatField(max_length=50)
     availability = models.BooleanField(default=True)
+    favorite = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return f"{self.title}:{self.description}"

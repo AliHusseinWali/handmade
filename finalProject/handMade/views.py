@@ -1,4 +1,7 @@
+from math import prod
 from re import A
+from shutil import register_unpack_format
+from xml.sax.handler import property_declaration_handler
 from django.shortcuts import redirect, render
 from .form import *
 from django.contrib import messages
@@ -13,6 +16,17 @@ def home(request):
     product = Product.objects.all()
     return render(request, 'handMade/allProduct.html',{'product':product})
     # return render(request,"handMade/home.html")
+
+
+def add_remove_favorite(request,id):
+    product = Product.objects.get(id=id)
+    if request.user in product.favorite.all():
+        product.favorite.remove(request.user)
+    else:
+        product.favorite.add(request.user)
+    # return redirect(reverse('home'))
+    return redirect('home')
+
 
 def userLogin(request):
     if request.method == 'POST':
@@ -56,10 +70,12 @@ def cart(request):
     return render(request, 'handMade/cart.html')
 
 
-def favorite(request):
-    return render(request, 'handMade/favorite.html')
+def user_favorites(request):
+    user_favorites = Product.objects.filter(favorite=request.user)
+    return render(request, 'handMade/favorite.html',{'user_favorites':user_favorites})
 
-# def allProduct(request):
-#     product = Product.objects.all()
-#     return render(request, 'handMade/allProduct.html',{'product':product})
+def product_details(request,id):
+    product = Product.objects.get(pk=id)
+    return render(request, 'handMade/product_details.html',{'product':product})
+
 
