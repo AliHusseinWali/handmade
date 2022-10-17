@@ -1,55 +1,89 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
 {% load static %}
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href="{% static 'handMade/style.css' %}" rel="stylesheet">
 
+<nav class="navbar navbar-expand-lg">
+	<a href="{% url 'home' %}" class="navbar-brand">Hand<b>Made</b></a>  		
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+		<span class="material-symbols-outlined">
+            menu
+            </span>
+	</button>
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+		<div class="navbar-nav">	
+			<div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">jewelry</a>
+				<div class="dropdown-menu">					
+					<a href="#" class="dropdown-item">Enameled Jewelry</a>
+					<a href="#" class="dropdown-item">Wire Wrapped Jewelry</a>
+					<a href="#" class="dropdown-item">Fabricated Jewelry</a>
+					<a href="#" class="dropdown-item">Beaded Jewelry</a>
+        </div>
+      </div>
+      <div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Clothing</a>
+				<div class="dropdown-menu">					
+					<a href="#" class="dropdown-item">Women’s</a>
+					<a href="#" class="dropdown-item">Men’s</a>
+					<a href="#" class="dropdown-item">Kid’s Baby</a>
+					<a href="#" class="dropdown-item">Bags Purses</a>
+        </div>
+      </div>
+      <div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Home & living</a>
+				<div class="dropdown-menu">					
+					<a href="#" class="dropdown-item">Decor</a>
+					<a href="#" class="dropdown-item">Decorative Pillows</a>
+					<a href="#" class="dropdown-item">Cookware</a>
+					<a href="#" class="dropdown-item">Living Room Furniture</a>
+        </div>
+      </div>
+      <div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Wedding & party</a>
+				<div class="dropdown-menu">					
+					<a href="#" class="dropdown-item">Invitations & Paper</a>
+					<a href="#" class="dropdown-item">Party Supplies</a>
+					<a href="#" class="dropdown-item">Wedding Accessories </a>
+					<a href="#" class="dropdown-item">Wedding Decorations</a>
+        </div>
+      </div>
+	  
+	  {% comment %} {% if request.user.is_staff %} {% endcomment %}
 
+      <div class="nav-item dropdown">
+          <a href="{% url 'addProduct'%}" class="nav-item nav-link dropdown-toggle">Add Product</a>
+      </div>
 
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home'%}">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Sign in</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"  href="{% url 'register' %}">register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"  href="{% url 'cart' %}">crat</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"  href="{% url 'user_favorites' %}">favorite</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'addProduct'%}">Add Product</a>
-        </li>
+	  {% comment %} {% endif %} {% endcomment %}
 
-
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+    </div>		
+		<div class="navbar-nav ml-auto">			
+			<div class="nav-item  search-dropdown">
+        <div>
+          <form>
+            <div class="input-group search-box">								
+              <input type="text" id="search" class="form-control" placeholder="Search here...">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </form>                        
+        </div>
       </div>
     </div>
-  </nav>
 
+{% if request.user.is_authenticated %}
+	<a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+	<a href="{% url 'user_favorites' %}" class="nav-item nav-link"><i class="fas fa-heart"></i></a>
+	<a href="{% url 'cart' %}" class="nav-item nav-link"><i class="fas fa-shopping-cart"></i></a>
+{% else %}
+	<a href="{% url 'login' %}" class="nav-item nav-link">sgin in</a>
+	<a href="{% url 'user_favorites' %}" class="nav-item nav-link"><i class="fas fa-heart"></i></a>
+	<a href="{% url 'cart' %}" class="nav-item nav-link"><i class="fas fa-shopping-cart"></i></a>
+			
+{% endif %}
+	
+  </div>
+</nav>

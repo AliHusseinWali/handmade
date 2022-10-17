@@ -2,12 +2,17 @@ from math import prod
 from re import A
 from shutil import register_unpack_format
 from xml.sax.handler import property_declaration_handler
+from click import confirmation_option
+from django.forms import IntegerField
 from django.shortcuts import redirect, render
 from .form import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import  HttpResponseRedirect
 from django.urls import reverse
+from django.db import IntegrityError
+from.decorators import forAdmin, notLoggedUsers
+
 
 # Create your views here.
 
@@ -24,10 +29,10 @@ def add_remove_favorite(request,id):
         product.favorite.remove(request.user)
     else:
         product.favorite.add(request.user)
-    # return redirect(reverse('home'))
-    return redirect('home')
+    return redirect(reverse('home'))
+    # return redirect('home')
 
-
+@notLoggedUsers
 def userLogin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -40,21 +45,34 @@ def userLogin(request):
             messages.info(request, 'Credentials error')
     return render(request, 'handMade/login.html',{})
 
+def userLogout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
 
+
+@notLoggedUsers
 def register(request):
-    form = CreateNewUser()
     if request.method == 'POST':
-        form = CreateNewUser(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, username + ' Created Successfully !')
-            return redirect('login')
-        else: 
-            messages.error(request, 'invalid')
-    return render(request,"handMade/register.html",{'form':form})
+        username = request.POST['username']
+        email = request.POST['email']
 
-
+        password = request.POST['password']
+        confirmation = request.POST['confirmation']
+        if password != confirmation:
+            return render(request, 'handMade/register.html',{
+                'message': 'Passwords must match.'
+            })
+        try:
+            user = User.objects.create_user(username, email, password)
+        except IntegrityError:
+            return render(request, 'handMade/register.html',{
+                'message': 'Username already taken.'
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse('home'))
+    else:
+        return render(request, 'handMade/register.html')
+@forAdmin
 def addProduct(request):
     if request.method =='POST':
         form = AddProduct(request.POST)
