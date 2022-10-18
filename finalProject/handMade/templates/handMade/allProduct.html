@@ -3,28 +3,34 @@
 {% extends 'handMade/home.html' %}
 
 {% block body %}
-
+<section class="section">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
   {% for card in product %}
-<div>
-  <a href="{%url 'Product_details' id=card.id %}" class="btn btn-primary">
-    <div class="card" style="width: 18rem;">
-      <img src={{card.imageLink}} class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{card.title}}</h5>
+      <div class="col"> 
+        <div class="card h-100">
+          <a href="{%url 'Product_details' id=card.id %}" class="opasity" >
+            <img src={{card.imageLink}} class="card-img-top "  alt="">
+          </a>
+          <div class="card-body Hcard">
+            <table class="mytable">
+              <tr>
+                <td>{{card.title}}</td>
+                <td>
+                  {% if request.user in card.favorite.all %}
+                  <a href="{% url 'add_remove_favorite' id=card.id %}"><i class="fa-solid fa-heart makefaiv"></i></a>
+                  {% else %}
+                  <a href="{% url 'add_remove_favorite' id=card.id %}"><i class="fa-regular fa-heart makefaiv"></i></a>
+                  {% endif %}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
-  
-{% if request.user in card.favorite.all %}
-  <a href="{% url 'add_remove_favorite' id=card.id %}">remove</a>
-  {% else %}
-  <a href="{% url 'add_remove_favorite' id=card.id %}">add</a>
-{% endif %}
-
-{% endfor %}
+  {% endfor %}
+  </div>
+</section>
 
 {% endblock %}
-
 
 

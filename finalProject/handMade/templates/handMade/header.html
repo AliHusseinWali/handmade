@@ -50,16 +50,16 @@
         </div>
       </div>
 	  
-	  {% comment %} {% if request.user.is_staff %} {% endcomment %}
+	  {% if request.user.is_staff %}
 
       <div class="nav-item dropdown">
           <a href="{% url 'addProduct'%}" class="nav-item nav-link dropdown-toggle">Add Product</a>
       </div>
 
-	  {% comment %} {% endif %} {% endcomment %}
+	  {% endif %}
 
     </div>		
-		<div class="navbar-nav ml-auto">			
+		<div class=" ml-auto" style="width:80%">			
 			<div class="nav-item  search-dropdown">
         <div>
           <form>

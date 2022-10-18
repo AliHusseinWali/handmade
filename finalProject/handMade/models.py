@@ -21,6 +21,7 @@ class Customer(models.Model):
 
 class Categories(models.Model):
     name = models.CharField(max_length=200, db_column="Catogery", null=True)
+    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -34,6 +35,7 @@ class Product (models.Model):
     price = models.FloatField(max_length=50)
     availability = models.BooleanField(default=True)
     favorite = models.ManyToManyField(User, blank=True)
+    cart = models.ManyToManyField(User,blank=True,related_name='Cart')
 
     def __str__(self):
         return f"{self.title}:{self.description}"
