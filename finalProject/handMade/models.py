@@ -20,11 +20,21 @@ class Customer(models.Model):
 
 
 class Categories(models.Model):
-    name = models.CharField(max_length=200, db_column="Catogery", null=True)
-    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, null=True,blank=True)
+    title = models.ForeignKey('self', related_name='children' ,on_delete=models.CASCADE,db_column="Main category" ,null=True,blank=True)
+    sub_category = models.CharField(max_length=200, db_column="Sub category", null=True)
+
 
     def __str__(self):
-        return self.name
+        return self.title
+
+    def __str__(self):
+        main_category = [self.sub_category]                  
+        Sub = self.title
+        while Sub is not None:
+            main_category.append(Sub.sub_category)
+            Sub = Sub.title
+        return ' -> '.join(main_category[::-1])  
+
 
 
 class Product (models.Model):

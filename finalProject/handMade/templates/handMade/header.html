@@ -13,53 +13,89 @@
 	<!-- Collection of nav links, forms, and other content for toggling -->
 	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
 		<div class="navbar-nav">	
-			<div class="nav-item dropdown">
+			<ul class="navbar-nav">
+
+				{% for i in category %}
+				{% if not i.children.all %}
+				<li class="nav-item">
+					<a class="nav-link" href="#">{{i.sub_category}}</a>
+				</li>
+
+				{% else %}
+
+				<li class="nav-item dropdown">
+					<a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{i.sub_category}} </a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+					{% for obj in i.children.all %}
+						{% if not obj.children.all %}
+						<li><a class="dropdown-item" href="#">{{obj.sub_category}}</a></li>
+						{% else %}
+						<li class="dropdown-submenu"><a class="dropdown-item" href="#">{{obj.sub_category}}</a>
+							<ul class="dropdown-menu">
+							{% for subobj in obj.children.all %}
+								<li><a class="dropdown-item" href="#">{{subobj.sub_category}}</a></li>
+							{% endfor %}
+							</ul>
+						</li>
+						{% endif %}
+					{% endfor %}
+					</ul>
+				</li>
+				{% endif %}
+				{% endfor %}
+				<li class="nav-item dropdown">
+					{% if request.user.is_staff %}
+					<a href="{% url 'addProduct'%}" class="nav-link ">Add Product</a>
+					{% endif %}
+				</li>
+			</ul>
+
+			{% comment %} <div class="nav-item dropdown">
 				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">jewelry</a>
 				<div class="dropdown-menu">					
 					<a href="#" class="dropdown-item">Enameled Jewelry</a>
 					<a href="#" class="dropdown-item">Wire Wrapped Jewelry</a>
 					<a href="#" class="dropdown-item">Fabricated Jewelry</a>
-					<a href="#" class="dropdown-item">Beaded Jewelry</a>
-        </div>
-      </div>
-      <div class="nav-item dropdown">
+					<a href="#" class="dropdown-item">Fabricated Jewelry</a>
+        		</div>
+      		</div> {% endcomment %}
+      		<div class="nav-item dropdown">
 				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Clothing</a>
 				<div class="dropdown-menu">					
 					<a href="#" class="dropdown-item">Women’s</a>
 					<a href="#" class="dropdown-item">Men’s</a>
 					<a href="#" class="dropdown-item">Kid’s Baby</a>
 					<a href="#" class="dropdown-item">Bags Purses</a>
-        </div>
-      </div>
-      <div class="nav-item dropdown">
+				</div>
+        	</div>
+      		<div class="nav-item dropdown">
 				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Home & living</a>
 				<div class="dropdown-menu">					
 					<a href="#" class="dropdown-item">Decor</a>
 					<a href="#" class="dropdown-item">Decorative Pillows</a>
 					<a href="#" class="dropdown-item">Cookware</a>
 					<a href="#" class="dropdown-item">Living Room Furniture</a>
-        </div>
-      </div>
-      <div class="nav-item dropdown">
+        		</div>
+        	</div>
+      		<div class="nav-item dropdown">
 				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Wedding & party</a>
 				<div class="dropdown-menu">					
 					<a href="#" class="dropdown-item">Invitations & Paper</a>
 					<a href="#" class="dropdown-item">Party Supplies</a>
 					<a href="#" class="dropdown-item">Wedding Accessories </a>
 					<a href="#" class="dropdown-item">Wedding Decorations</a>
-        </div>
-      </div>
+        		</div>
+        	</div>
 	  
-	  {% if request.user.is_staff %}
+		{% if request.user.is_staff %}
+			<div class="nav-item dropdown">
+				<a href="{% url 'addProduct'%}" class="nav-item nav-link dropdown-toggle">Add Product</a>
+			</div>
+		{% endif %}
 
-      <div class="nav-item dropdown">
-          <a href="{% url 'addProduct'%}" class="nav-item nav-link dropdown-toggle">Add Product</a>
-      </div>
-
-	  {% endif %}
-
-    </div>		
-		<div class=" ml-auto" style="width:80%">			
+    	</div>		
+		<div class=" ml-auto search-dropdown" style="width:80%">			
 			<div class="nav-item  search-dropdown">
         <div>
           <form>
@@ -71,7 +107,7 @@
             </div>
           </form>                        
         </div>
-      </div>
+     	</div>
     </div>
 
 {% if request.user.is_authenticated %}

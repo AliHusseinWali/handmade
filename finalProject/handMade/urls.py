@@ -11,6 +11,7 @@ urlpatterns = [
     path('favorite', views.user_favorites , name='user_favorites'),
     path('Product_details/<int:id>', views.product_details , name='Product_details'),
     path('add_remove_favorite/<int:id>', views.add_remove_favorite , name='add_remove_favorite'),
+    path('note_header',views.categoreis , name='note_header'),
 
 
 ]

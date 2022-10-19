@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="{% static 'handMade/style.css' %}" rel="stylesheet">
+
 </head>
 <body>
     {% load crispy_forms_tags %}
-{% load static %}
 
 <form action="{% url 'addProduct'%}" method="POST">
     {% csrf_token %}

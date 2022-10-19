@@ -8,6 +8,9 @@ class customerAdmin(admin.ModelAdmin):
 class productAdmin(admin.ModelAdmin):
     list_display =  ('title','description','imageLink', 'category','price','availability')
 
+class categoriesAdmin(admin.ModelAdmin):
+    list_display = ('title','sub_category')
+
 admin.site.register(Customer,customerAdmin)
-admin.site.register(Categories)
+admin.site.register(Categories,categoriesAdmin)
 admin.site.register(Product,productAdmin)

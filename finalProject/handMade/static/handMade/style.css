@@ -429,8 +429,6 @@ ul .mynav{
     }
   }
   
-  
-  
   body {
       font-family: 'Varela Round', sans-serif;
   }
@@ -473,7 +471,6 @@ ul .mynav{
   .search-box {
       width: 90%;
       position:relative;
-      margin-bottom: 2rem;
       border-radius: 2rem;
   }	
   .search-box input {		
@@ -562,10 +559,7 @@ ul .mynav{
       border-radius: 6px;
       background: #FFF;
   }
-  .form.signup{
 
-      /* pointer-events: none; */
-  }
   .forms.show-signup .form.signup{
       opacity: 1;
       pointer-events: auto;
@@ -580,9 +574,7 @@ ul .mynav{
       color: #232836;
       text-align: center;
   }
-  form{
-      margin-top: 30px;
-  }
+  
   .form .field{
       position: relative;
       height: 50px;
@@ -711,4 +703,8 @@ ul .mynav{
   
   .opasity:hover{
     opacity: 0.7;
+  }
+
+  #id_title{
+    background-color: #00b4d5;
   }

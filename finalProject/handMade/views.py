@@ -1,6 +1,7 @@
 from math import prod
 from re import A
 from shutil import register_unpack_format
+from turtle import title
 from xml.sax.handler import property_declaration_handler
 from click import confirmation_option
 from django.forms import IntegerField
@@ -12,6 +13,7 @@ from django.http import  HttpResponseRedirect
 from django.urls import reverse
 from django.db import IntegrityError
 from.decorators import forAdmin, notLoggedUsers
+from .models import *
 
 
 # Create your views here.
@@ -97,3 +99,6 @@ def product_details(request,id):
     return render(request, 'handMade/product_details.html',{'product':product})
 
 
+def categoreis(request):
+    category = Categories.objects.filter(title=None)
+    return render(request, 'handMade/note_header.html' , {'category':category})
