@@ -1,0 +1,16 @@
+{% comment %} 
+{% for category in categoriesall %}
+<a href="{% url 'chooes_category' category.id %}" role="button" class="for-one-category">
+    <button type="submit" class="btn btn-primary" >
+        <div class="category-text">{{ category.sub_category }}</div>
+    </button>
+</a>
+{% endfor %}
+     {% endcomment %}
+
+
+{% for child_category in category_user.children.all %}
+    {% for child_product in child_category.product_set.all %}
+        {{ child_product }}
+    {% endfor %}
+{% endfor %}

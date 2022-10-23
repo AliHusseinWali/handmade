@@ -21,4 +21,5 @@ class CreateNewUser(UserCreationForm):
 class AddProduct(ModelForm):
     class Meta:
         model = Product
+        exclude = ('favorite','cart')
         fields = "__all__"

@@ -1,6 +1,7 @@
 from tokenize import group
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from .models import Categories
 
 def notLoggedUsers(viewFunction):
     def wrapperFunction(request, *args, **kwargs):
@@ -20,3 +21,4 @@ def forAdmin(viewFunction):
         if group == 'customers':
             return redirect(reverse('home'))
     return wrapperFunction
+

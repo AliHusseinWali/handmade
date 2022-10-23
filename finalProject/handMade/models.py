@@ -38,11 +38,11 @@ class Categories(models.Model):
 
 
 class Product (models.Model):
-    title = models.CharField(max_length=500, verbose_name="name of Products")
+    title = models.CharField(max_length=500, verbose_name="name of Product")
     description = models.TextField(max_length=1000)
     imageLink = models.CharField(max_length=500, null=True)
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True)
-    price = models.FloatField(max_length=50)
+    price = models.IntegerField()
     availability = models.BooleanField(default=True)
     favorite = models.ManyToManyField(User, blank=True)
     cart = models.ManyToManyField(User,blank=True,related_name='Cart')

@@ -17,4 +17,8 @@
        transform: rotate(-90deg);
    } 
 
-   
+   .right-one{
+    margin-left:28rem;
+    padding-bottom: 0.5rem;
+    padding-left:15px;
+   }

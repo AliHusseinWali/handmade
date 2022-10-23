@@ -1,0 +1,13 @@
+{% comment %} 
+{% for cat in category %}
+{{cat}}
+{% endfor %}
+
+     {% endcomment %}
+
+
+{% for child_category in category_user.children.all %}
+    {% for child_product in child_category.product_set.all %}
+        {{ child_product }}
+    {% endfor %}
+ {% endfor %}

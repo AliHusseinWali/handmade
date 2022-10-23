@@ -7,11 +7,15 @@ urlpatterns = [
     path('logout', views.userLogout , name='logout'),
     path('register', views.register , name='register'),
     path('addProduct', views.addProduct , name='addProduct'),
-    path('cart', views.cart , name='cart'),
+    path('cart', views.cart_for_user , name='cart'),
     path('favorite', views.user_favorites , name='user_favorites'),
     path('Product_details/<int:id>', views.product_details , name='Product_details'),
     path('add_remove_favorite/<int:id>', views.add_remove_favorite , name='add_remove_favorite'),
-    path('note_header',views.categoreis , name='note_header'),
+    path('add_remove_to_cart/<int:id>', views.add_remove_to_cart , name='add_remove_to_cart'),
+    path('search', views.search , name='search'),
+    path('category', views.categoreis , name='categoreis'),
+    path('category/<int:id>', views.chooes_category , name='chooes_category'),
+    
 
 
 ]
