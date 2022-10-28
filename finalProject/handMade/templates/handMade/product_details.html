@@ -2,7 +2,7 @@
 
 {% extends 'handMade/home.html' %}
 {% load static %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+{% comment %} <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"> {% endcomment %}
 
 {% block body %}
 
@@ -22,11 +22,11 @@
               <i class="filled fas fa-star"></i>
               <i class="filled fas fa-star"></i>
           </div>
-          <span>{{product.price}}</span>
+          <span>USD {{product.price}}</span>
           <div class="options">
         
             {% if request.user in product.cart.all %}
-            <form action="{% url 'add_remove_to_cart' product.id %}" method="POST">
+            {% comment %} <form action="{% url 'add_remove_to_cart' product.id %}" method="POST">
                 {% csrf_token %}
                 <button type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
             </form>            
@@ -34,8 +34,17 @@
 
             <form action="{% url 'add_remove_to_cart' product.id %}" method="POST">
                 {% csrf_token %}
-                <button type="submit"><i class="fa-regular fa-cart-shopping"></i></button>
-            </form>            
+                <button type="submit"><i class="fa-light fa-cart-shopping"></i></button>
+            </form>  {% endcomment %}
+            
+            <form class="text-end">
+                <i  onclick="toggle1(this,{{product.id}})" class="fa-solid fa-cart-shopping"></i>
+            </form>
+              {% else %}
+            <form  class="text-end">
+                <i  onclick="toggle1(this, {{product.id}})" class="fa-light fa-cart-shopping"></i>
+            </form>
+
 
             {% endif %}
    
@@ -54,12 +63,3 @@
 
 {% endblock %}
 
-{% comment %} 
-<div class="card" style="width: 18rem;">
-    <img src="{{product.imageLink}}" class="card-img-top" alt="..."   width="250px" height="250px">
-    <div class="card-body">
-      <h5 class="card-title">{{product.title}}</h5>
-      <p class="card-text">{{product.description}}</p>
-      <h5 class="card-title">{{product.price}}</h5>
-    </div>
-  </div> {% endcomment %}

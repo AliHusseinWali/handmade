@@ -1,3 +1,5 @@
+from email.policy import default
+from itertools import product
 from tokenize import blank_re
 from django.db import models
 from django.contrib.auth.models import User
@@ -46,6 +48,16 @@ class Product (models.Model):
     availability = models.BooleanField(default=True)
     favorite = models.ManyToManyField(User, blank=True)
     cart = models.ManyToManyField(User,blank=True,related_name='Cart')
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return f"{self.title}:{self.description}"
+    
+    
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product,  on_delete=models.CASCADE, null=True)
+    quantity = models.IntegerField()
+    
+    def __str__(self):
+        return self.customer

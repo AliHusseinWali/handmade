@@ -133,9 +133,11 @@ def addProduct(request):
 def cart_for_user(request):
     categories = Categories.objects.filter(title=None)
     userCart = Product.objects.filter(cart=request.user)
+    
     context = {
         'userCart':userCart,
-        'categories':categories
+        'categories':categories,
+
     }
     return render(request, 'handMade/cart.html',context)
 
@@ -170,23 +172,23 @@ def add_remove_to_cart(request,id):
 def search(request):
     return render(request,'handMade/search.html' )
 
+
 def categoreis(request):
     categories = Categories.objects.filter(title=None)
-    categoriesall = Categories.objects.all()
-    return render(request,'handMade/category.html',{'categoreisall':categoriesall.sub_category,'categoreisa':categories})
+    return render(request,'handMade/category.html',{'categoreisa':categories})
+
 
 def chooes_category(request,id):
-    # category = Categories.objects.get(id=id)
-    # return render(request,'handMade/note_cat.html',{'category':category.sub_category})
-    
+    categories = Categories.objects.filter(title=None)
     category = Categories.objects.get(id=id)
-    category_user = Categories.objects.filter(pk=id).prefetch_related('children__product_set',).get()
-    product = Product.objects.filter(category=category_user)
-    child_products = Product.objects.filter(category__in=category_user.children.all())
-    all_products = product.union(child_products)
+    product = category.product_set.all()
+    
     context = {
-        'category_user':category_user,
-        'all_products':all_products,
-        'category':category
+        'category':category,
+        'product':product,
+        'categories':categories
     }
-    return render(request,'handMade/note_cat.html',context)
+    return render(request,'handMade/allProduct.html',context)
+
+def page_not_found_view(request, exception):
+    return render(request, 'handMade/404.html', status=404)

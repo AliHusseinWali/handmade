@@ -82,10 +82,7 @@ h4{
 
 }
  
-.makefaiv{
-  margin-left: 1500%;
-  
-} 
+
 /* fotter start here  */
 
 .card-body{
@@ -767,3 +764,18 @@ margin-top: 1rem;
   background-color: bisque;
   height: fit-content;
 }
+
+
+.but-fav{
+  display: flex;
+  background: none;
+  border: none;
+}
+
+
+.search-icon {
+  font-weight: 900;
+  color: #fff;
+}
+
+

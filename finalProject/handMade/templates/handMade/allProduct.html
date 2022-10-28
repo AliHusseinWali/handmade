@@ -10,21 +10,20 @@
             <img src={{card.imageLink}} class="card-img-top "  alt="">
           </a>
           <div class="card-body Hcard">
-            <table class="mytable">
-              <tr>
-                <td>{{card.title}}</td>
-                <td>
-                  {% if request.user in card.favorite.all %}
-                  <form action="{% url 'add_remove_favorite' id=card.id %}">
-                    {% csrf_token %}
-                    <button type="submit"><i class="fa-solid fa-heart makefaiv"></i></button>
-                  </form>
-                  {% else %}
-                  <form action="{% url 'add_remove_favorite' id=card.id %}">
-                    {% csrf_token %}
-                    <button type="submit"><i class="fa-regular fa-heart makefaiv"></i></button>
-                  </form>
-                  {% endif %}
+            <table class="mytable w-100">
+              <tbody class='w-100'>
+                <tr>
+                  <td>{{card.title}}</td>
+                  <td style="width:1%;">
+                    {% if request.user in card.favorite.all %}
+                    <form class="text-end">
+                      <i  onclick="toggle(this,{{card.id}})" class="fa-solid fa-heart "></i>
+                    </form>
+                    {% else %}
+                    <form  class="text-end">
+                      <i  onclick="toggle(this, {{card.id}})" class="fa-regular fa-heart "></i>
+                    </form>
+                    {% endif %}
                 </td>
               </tr>
             </table>
