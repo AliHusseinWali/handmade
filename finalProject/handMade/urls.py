@@ -15,6 +15,10 @@ urlpatterns = [
     path('search', views.search , name='search'),
     path('category', views.categoreis , name='categoreis'),
     path('category/<int:id>', views.chooes_category , name='chooes_category'),
+    path('add_quantity/<int:id>', views.add_quantity , name='add_quantity'),
+    path('sub_quantity/<int:id>', views.sub_quantity , name='sub_quantity'),
+    path('contact', views.contact , name='contact'),
+
     
 
 

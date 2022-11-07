@@ -778,4 +778,8 @@ margin-top: 1rem;
   color: #fff;
 }
 
-
+ .add-remove{
+  width: 15px;
+  height: 15px;
+  color: #eb5844;
+}

@@ -7,7 +7,9 @@
       <div class="col"> 
         <div class="card h-100">
           <a href="{%url 'Product_details' id=card.id %}" class="opasity" >
-            <img src={{card.imageLink}} class="card-img-top "  alt="">
+            <div style="width: 100%;height: 300px;">
+              <img src={{card.imageLink}} class="card-img-top "  alt="" style="width: 100%;height: 100%;object-fit: cover;">
+            </div>
           </a>
           <div class="card-body Hcard">
             <table class="mytable w-100">

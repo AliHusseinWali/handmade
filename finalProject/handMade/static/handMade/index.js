@@ -26,15 +26,15 @@ function toggle1(btn, id) {
     .then(result => 
     {
 
-    if(btn.classList.contains("fa-solid"))
+    if(btn.classList.contains("fas"))
     {
-        btn.classList.remove("fa-solid");
-        btn.classList.add("fa-light");
+        btn.classList.remove("fas");
+        btn.classList.add("fas");
     }
     else
     {
-        btn.classList.add("fa-solid");
-        btn.classList.remove("fa-light");
+        btn.classList.add("fas");
+        btn.classList.remove("fas");
     }
 
 })

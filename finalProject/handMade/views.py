@@ -1,4 +1,3 @@
-from itertools import product
 from unicodedata import category
 from django.shortcuts import redirect, render
 from .form import *
@@ -13,6 +12,10 @@ from .models import *
 
 # Create your views here.
 
+"""To include the header and footer and to include any page that wants to be displayed inside it,
+as well as the specialized search has been added inside it"""
+
+ 
 
 def home(request):
     categories = Categories.objects.filter(title=None)
@@ -24,10 +27,14 @@ def home(request):
     PriceTo = None
     caseSensitive = None
     
+    # for case sensitive search
+    
     if 'cs' in request.GET:
         caseSensitive = request.GET['cs']
         if not caseSensitive:
             caseSensitive = 'off'
+    
+    # for lookup in name of product
     
     if 'searchname' in request.GET:
         name = request.GET['searchname']
@@ -36,6 +43,8 @@ def home(request):
                 product = product.filter(title__contains=name)
             else:
                 product = product.filter(title__icontains=name)
+    
+    # for lookup in description of product
                 
     if 'searchdesc' in request.GET: 
         desc = request.GET['searchdesc']
@@ -44,6 +53,8 @@ def home(request):
                 product = product.filter(description__contains=desc)
             else:
                 product = product.filter(description__icontains=desc)
+
+    # for lookup in price of product
 
     if 'searchpricefrom' in request.GET and 'searchpriceto' in request.GET:
         PriceFrom = request.GET['searchpricefrom']
@@ -59,6 +70,7 @@ def home(request):
             
     return render(request, 'handMade/allProduct.html',{'product':product,'categories':categories})
 
+# add or remove product from favorite list for user
 
 def add_remove_favorite(request,id):
     product = Product.objects.get(id=id)
@@ -112,6 +124,8 @@ def register(request):
     else:
         return render(request, 'handMade/register.html',{'categories':categories})
 
+# allows the owner of website to add a new product
+
 @forAdmin
 def addProduct(request):
     categories = Categories.objects.filter(title=None)
@@ -130,16 +144,47 @@ def addProduct(request):
         }
         return render(request,'handMade/addProduct.html', context)
 
+# management the cart that use to buy the product
+
 def cart_for_user(request):
     categories = Categories.objects.filter(title=None)
-    userCart = Product.objects.filter(cart=request.user)
-    
+    userCart = Product.objects.all().filter(cart=request.user)
+        
     context = {
         'userCart':userCart,
         'categories':categories,
-
     }
     return render(request, 'handMade/cart.html',context)
+
+# for add quantity the product that will buy it, when add to cart
+
+def add_quantity(request,id):
+    orderUser = Product.objects.get(pk=id)
+    if request.user.is_authenticated and not request.user.is_anonymous and id:
+        if orderUser.quantity == request.user.id:
+            orderUser.quantity +=1
+            
+            orderUser.save()
+        else:
+            orderUser.quantity +=1
+            orderUser.save()
+    return redirect('cart')
+
+# for minimize quantity the product that will buy it, when add to cart
+
+def sub_quantity(request,id):
+    orderUser = Product.objects.get(pk=id)
+    if request.user.is_authenticated and not request.user.is_anonymous and id:
+        if orderUser.quantity == request.user.id:
+            if orderUser.quantity > 1:    
+                orderUser.quantity -=1
+                orderUser.save()
+        else:
+            orderUser.quantity -=1
+            orderUser.save()
+    return redirect('cart')
+
+# for management the favorites product  page of for customer
 
 def user_favorites(request):
     categories = Categories.objects.filter(title=None)
@@ -150,6 +195,8 @@ def user_favorites(request):
     }
     return render(request, 'handMade/favorite.html',context)
 
+# view the details of product like title, description, price and image
+
 def product_details(request,id):
     categories = Categories.objects.filter(title=None)
     product = Product.objects.get(pk=id)
@@ -159,24 +206,32 @@ def product_details(request,id):
     }
     return render(request, 'handMade/product_details.html',context)
 
+# add or remove product from cart list for user
+
 def add_remove_to_cart(request,id):
     product = Product.objects.get(pk=id)
+    
     if request.user in product.cart.all():
         product.cart.remove(request.user)
     else:
         product.cart.add(request.user)
-    return redirect(reverse('Product_details', kwargs={'id':product.id}))
+    return redirect(reverse(
+        'Product_details',
+        kwargs={'id':product.id}
+        ))
 
-
+#  view advanced search box
 
 def search(request):
     return render(request,'handMade/search.html' )
 
+# views the all categories and sub categories for product
 
 def categoreis(request):
     categories = Categories.objects.filter(title=None)
     return render(request,'handMade/category.html',{'categoreisa':categories})
 
+# to chooes tha any category 
 
 def chooes_category(request,id):
     categories = Categories.objects.filter(title=None)
@@ -192,3 +247,12 @@ def chooes_category(request,id):
 
 def page_not_found_view(request, exception):
     return render(request, 'handMade/404.html', status=404)
+
+
+def contact(request):
+    categories = Categories.objects.filter(title=None)
+    context = {
+        'categories':categories
+    }
+
+    return render(request, 'handMade/contact.html',context)

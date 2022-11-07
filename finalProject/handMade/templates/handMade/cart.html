@@ -4,14 +4,19 @@
 {% block title %} My Cart {% endblock %}
 
 {% block body %}
+
+{% for cartitem in product %}
+{{cartitem.title}}    
+{% endfor %}
+    
 <div class="my-form container p-5 my-5 rounded border border-warning">
     <h2 class="text-center">My Cart</h2>
     <hr>
             <h5>
                 Full name: {{request.user}}
                 <hr>
-                Oredrs number : <span class="my-num"></span>, Total: <span class="my-num"></span>
-                for <span class="my-num"></span> products
+                <!-- Oredrs number : <span class="my-num"></span>, Total: <span class="my-num"></span>
+                for <span class="my-num"></span> products -->
             </h5>
                 <table class="table table-hover">
                     <thead>
@@ -21,8 +26,8 @@
                             <th scope="col">Image</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Subtotals</th>
-                            <th scope="col">Control</th>
+                            <th scope="col">Subtotal</th>
+   {% comment %}  <th scope="col">Control</th> {% endcomment %}
                         </tr>
                     </thead>
                     <tbody>
@@ -30,13 +35,19 @@
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
                                 <td>{{order.title}}</td>
-                                <td><img src="{{order.imageLink}}" style="width: 80px; height: 80px;" alt="{{order.imageLink}}"></td>
-                                <td>
+                                <td><img src="{{order.imageLink}}" style="width: 80px; height: 80px;" alt="{{item.product.imageLink}}"></td>
+                                {% comment %} <td>
                                     <i onclick="decrementValue(this,{{order.id}})" class="fa-solid fa-square-minus" ></i>
-                                    <input type="text" name="quantity" value="{{order.quantity}}" maxlength="2" max="10" size="1" id="number" />                                    <!-- {{order.quantity}} -->
-                                    <i onclick="incrementValue(this,{{order.id}})" class="fa-solid fa-square-plus" id="number"></i>
+                                    <input type="text" name="quantity" value="{{order.quantity}}" maxlength="2" max="10" size="1"  id="number" />
+                                    <i onclick="incrementValue(this,{{order.id}})" class="fa-solid fa-square-plus" ></i>
+                                </td> {% endcomment %}
+                                <td>
+                                    <a href="{% url 'sub_quantity' id=order.pk %}"><img src="../../static/handMade/image/minus-svgrepo-com(3).svg" class="add-remove"  alt=""></a>
+                                    {{order.quantity}}
+                                    <a href="{% url 'add_quantity' id=order.pk %}"><img src="../../static/handMade/image/plus-svgrepo-com.svg" class="add-remove" alt=""></a>
                                 </td>
                                 <td>{{order.price}}$</td>
+                                <td>{% widthratio order.quantity 1 order.price %}$</td>
                             </tr>
                         {% empty %}
                         <h3>No orders here, <a class="text-dark" href="{% url 'home' %}">All product</a> </h3>
